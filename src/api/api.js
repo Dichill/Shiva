@@ -11,7 +11,7 @@ const latestUpdates = async() => {
     $('div.body-site div.container.container-main div.panel-content-genres div.content-genres-item').each((index, element) => {
         const $element = $(element);
         const title = $element.find('a').attr('title');
-        const link = $element.find('a').attr('href');
+        const link = $element.find('a').attr('href').split('/')[3];
         const img = $element.find('img').attr('src');
 
         promises.push({
