@@ -10,7 +10,7 @@ const api = require('../api');
 // });
 
 router.get('/search/:query', (req, res) => {
-    const query = req.params.query;
+    const query = req.params.query.replace(" ", "_");
     api.search(query)
     .then(comic => {
         res.status(200).json({
@@ -50,7 +50,7 @@ router.get('/comic/:query', (req, res) => {
 
 router.get('/comic/read/:query', (req, res) => {
     const query = req.params.query;
-    
+
     api.readMangaHandler(query)
     .then(comic => {
         res.status(200).json({
