@@ -1,0 +1,39 @@
+{
+  "name": "shiva",
+  "version": "1.0.0",
+  "description": "A Webtoon Serversided-Scraper that pairs with the Shiva App for backend services.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "dev-api": "nodemon src/api/api.js"
+  },
+  "keywords": [
+    "webtoon",
+    "comic",
+    "manga",
+    "manhwa",
+    "manhua",
+    "scraper"
+  ],
+  "author": {
+    "name": "Dichill Tomarong",
+    "email": "dichilltomarong@yahoo.com",
+    "social": "https://github.com/Dichill"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cheerio": "^1.0.0-rc.10",
+    "compose-middleware": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "morgan": "^1.10.0",
+    "requests": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
