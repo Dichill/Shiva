@@ -1,9 +1,9 @@
 import requests
 import os
 
-search_api = 'https://shiva-comic.herokuapp.com/api/v1/search/'
-content_api = 'https://shiva-comic.herokuapp.com/api/v1/comic/'
-read_api = 'https://shiva-comic.herokuapp.com/api/v1/comic/read/'
+search_api = 'https://shiva-comic.herokuapp.com/api/v1/manganelo/search/'
+content_api = 'https://shiva-comic.herokuapp.com/api/v1/manganelo/comic/'
+read_api = 'https://shiva-comic.herokuapp.com/api/v1/manganelo/comic/read/'
 
 headers = {}
 headers['Referer'] = 'https://readmanganato.com/'
@@ -34,7 +34,32 @@ def getMangaContent(res):
     choose = input('[Shiva] Choose what chapter to Download: ')
 
     if choose == "*":
-        print("*")
+        for x in range(0, len(chapter_id)):
+            res = requests.get(read_api + chapter_id[x])
+            print("[Shiva] Download Chapters from ~ {0}".format(title))
+
+            chapter_path = '{0}/{1}'.format(title, chapters[x]['chapter_id'].split('~')[1])
+
+            if not os.path.exists(title):
+                os.makedirs(title)
+            if not os.path.exists(chapter_path):
+                    os.makedirs(chapter_path)
+
+            body = res.json()
+
+            os.system('cls')
+
+            for i in range(0, len(body['comic'][0]['images'])):
+                r = requests.get(body['comic'][0]['images'][i], headers=headers)
+
+                os.system('cls')
+                print('[Shiva] Downloading {0}/{1} | From Chapter: {2}'.format(i + 1, len(body['comic'][0]['images']), chapter_id[x].split('~')[1].split('-')[1]))
+
+                with open('{0}/{1}.jpg'.format(chapter_path, i + 1), 'wb') as fh:
+                    fh.write(r.content)
+                    
+            print('[Shiva] Finished Downloading.')
+        
     elif " " in choose:
         print('multiple selections')
     elif int(choose) <= len(chapter_id):
@@ -94,15 +119,3 @@ else:
         manga_selected = requests.get(content_api + results[int(choose)])
         manga_selected = manga_selected.json()
         getMangaContent(manga_selected)
-
-# for x in range(0, len(data['comic'][0]['images'])):
-    
-#     r = requests.get(data['comic'][0]['images'][x], headers=headers)
-
-#     with open('chapter_173/{0}.jpg'.format(x + 1), 'wb') as fh:
-#         fh.write(r.content)
-
-# r = requests.get(url, headers=headers)
-
-#     with open('1.jpg', 'wb') as fh:
-#         fh.write(r.content)
