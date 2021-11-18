@@ -84,7 +84,7 @@ It is also capable of getting the details of the comic, also the chapters! You c
 ### **:busts_in_silhouette: Credits**
 
 - [Chris Michael](https://github.com/ChrisMichaelPerezSantiago) - For the amazing gogoanime project that he made! The backbone of Shiva!
-- [Gabriel Ivan](#) (Front-End Developer)
+- [Gabriel Ivan](#) (Frontend Developer)
 - [Dichill](#) (Backend Developer)
 ---
 
