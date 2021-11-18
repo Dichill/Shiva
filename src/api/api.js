@@ -1,6 +1,13 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const url = require('./urls');
+const fs = require('fs');
+
+// For Debugging Purposes
+// fs.writeFile('data.html', $.html(), function (err) {
+//     if (err) return console.log(err);
+//     console.log('[Shiva] File Created.');
+// });
 
 const latestUpdates = async() => {
     const res = await axios.get(`${url.BASE_URL}genre-all`)
@@ -46,21 +53,21 @@ const search = async(query) => {
     return await Promise.all(promises)
 }
 
-const hotManga = async() => {
-    const res = await axios.get(`${url.BASE_URL}genre-all?type=topview`)
+const hotManga = async(page) => {
+    const res = await axios.get(`${url.BASE_URL}genre-all/${page}?type=topview`)
     const body = await res.data
     const $ = cheerio.load(body);
     const promises = [];
 
-    $('div.body-site div.container.container-main div.panel-content-genres div.content-genres-item').each((index, element) => {
+    $('div.body-site div.container.container-main div.panel-content-genres div.content-genres-item').each((index, element) => {        
         const $element = $(element);
         const title = $element.find('a').attr('title');
-        const link = $element.find('a').attr('href');
+        const link = $element.find('a').attr('href').split('/')[3];
         const img = $element.find('img').attr('src');
 
         promises.push({
             title: title,
-            link: link.split('/')[3],
+            link: link,
             img: img
         })
     })
@@ -72,6 +79,7 @@ const contentMangaHandler = async(query) => {
     const res = await axios.get(`https://readmanganato.com/${query}`)
     const body = await res.data
     const $ = cheerio.load(body);
+
     const promises = [];
     const genres = [];
     const chapters = [];
@@ -96,10 +104,10 @@ const contentMangaHandler = async(query) => {
         const liTotal = $element.find('div.panel-story-chapter-list ul li').length;
         $element.find('div.panel-story-chapter-list ul li').each((j, el) =>{
             $el = $(el);
-            chapter_id = $el.find('a').attr('href').split('/')[3] + "~" + $el.find('a').attr('href').split('/')[4];
-            chapter_num = $el.find('a').text();
-            chapter_views = $el.find('span.chapter-view.text-nowrap').text();
-            chapter_published = $el.find('span.chapter-time.text-nowrap').text();
+            const chapter_id = $el.find('a').attr('href').split('/')[3] + "~" + $el.find('a').attr('href').split('/')[4];
+            const chapter_num = $el.find('a').text();
+            const chapter_views = $el.find('span.chapter-view.text-nowrap').text();
+            const chapter_published = $el.find('span.chapter-time.text-nowrap').text();
 
             chapters.push({
                 chapter: chapter_num,
@@ -130,6 +138,7 @@ const readMangaHandler = async(query) => {
     const res = await axios.get(`https://readmanganato.com/${query.replace("~", "/")}`)
     const body = await res.data
     const $ = cheerio.load(body);
+
     const promises = [];
     const images = [];
 
@@ -141,11 +150,34 @@ const readMangaHandler = async(query) => {
             image = $el.attr('src');
             images.push(image)
         })
+
+        promises.push({
+            images: images,
+        })
     });
 
-    promises.push({
-        images: images,
-    })
+    return await Promise.all(promises);
+}
+
+const topWeekManga = async() => {
+    const res = await axios.get(`${url.BASE_URL}`)
+    const body = await res.data
+    const $ = cheerio.load(body);
+    const promises = [];
+
+    $('div.body-site div.container.container-silder div.owl-carousel div.item').each((index, element) => {
+        const $element = $(element)
+        const img = $element.find('img').attr('src');
+        const title = $element.find('div.slide-caption a').attr('title')
+        const link = $element.find('div.slide-caption a').attr('href').split('/')[3]
+
+        promises.push({
+            title: title,
+            img: img,
+            link: link
+        })
+
+    });
 
     return await Promise.all(promises);
 }
@@ -154,6 +186,7 @@ module.exports = {
     latestUpdates,
     contentMangaHandler,
     readMangaHandler,
-    search,
-    hotManga
+    topWeekManga,
+    hotManga,
+    search
 }

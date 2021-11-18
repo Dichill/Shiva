@@ -9,9 +9,10 @@ router.get('/', (req, res) => {
         entries: [{
             "Search": "/api/v1/Search/:query",
             "LatestUpdates": "/api/v1/latest_updates",
-            "TopWeek": "/api/v1/top_week",
+            "TopWeek": "Down at the moment.",
             "ContentMangaHandler": "/api/v1/comic/:query",
-            "ReadMangaHandler": "/api/v1/comic/read/:query"
+            "ReadMangaHandler": "/api/v1/comic/read/:query",
+            "Hot": "/api/v1/hot/:page"
         }]
     });
 });
