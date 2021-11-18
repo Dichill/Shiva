@@ -3,6 +3,8 @@
 <p align="center">
   <img src="https://img.shields.io/badge/node->=14.17.x-brightgreen.svg" />
   <img src="https://img.shields.io/badge/npm->=6.14.x-brightgreen.svg" />
+  <img src="https://img.shields.io/badge/pip->=21.2.x-blue.svg" />
+  <img src="https://img.shields.io/badge/python->=3.7.x-orange.svg" />
 </p>
 
 ## Shiva
