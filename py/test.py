@@ -1,6 +1,3 @@
-import asyncio
-import aiofiles
-
 import requests
 import os
 
@@ -13,11 +10,7 @@ headers['Referer'] = 'https://readmanganato.com/'
 
 user = input("[Shiva] Search for Manga or paste in ID: ")
 
-if 'manga' in user.lower():
-    content = requests.get(content_api + user)
-
-    res = content.json();
-
+def getMangaContent(res):
     title = res['comic'][0]['title']
     chapters = res['comic'][0]['chapters']
 
@@ -29,7 +22,7 @@ if 'manga' in user.lower():
         res['comic'][0]['description'], res['comic'][0]['total_chapters']
     ))
 
-    print("Chapters: \n")
+    print("Chapters:")
 
     chapter_id = []
     
@@ -58,16 +51,49 @@ if 'manga' in user.lower():
 
         body = res.json()
 
+        os.system('cls')
+        print('[Shiva] Downloading 0/{0}'.format(len(body['comic'][0]['images'])))
+
         for x in range(0, len(body['comic'][0]['images'])):
             r = requests.get(body['comic'][0]['images'][x], headers=headers)
 
+            os.system('cls')
+            print('[Shiva] Downloading {0}/{1}'.format(x + 1, len(body['comic'][0]['images'])))
+
             with open('{0}/{1}.jpg'.format(chapter_path, x + 1), 'wb') as fh:
                 fh.write(r.content)
+                
         print('[Shiva] Finished Downloading.')
+
+if 'manga' in user.lower():
+    content = requests.get(content_api + user)
+
+    res = content.json();
+
+    if res['isSuccess'] == True:
+        getMangaContent(res)
+    else:
+        print("[Shiva] Invalid Response, try again.")
 else:
     query_result = requests.get(search_api + user)
+    response = query_result.json()
 
+    if response['isSuccess'] == True:
+        os.system('cls')
+        print("[Shiva Comic Scraper ~ Manganelo]")
+        print("Search Results:\n")
+        
+        results = []
 
+        for x in range(0, len(response['comic'])):
+            print("[{0}] {1}".format(x, response['comic'][x]['title']))
+            results.append(response['comic'][x]['link'])
+
+        choose = input("[Shiva] Choose Manga: ")
+
+        manga_selected = requests.get(content_api + results[int(choose)])
+        manga_selected = manga_selected.json()
+        getMangaContent(manga_selected)
 
 # for x in range(0, len(data['comic'][0]['images'])):
     
@@ -75,8 +101,6 @@ else:
 
 #     with open('chapter_173/{0}.jpg'.format(x + 1), 'wb') as fh:
 #         fh.write(r.content)
-
-
 
 # r = requests.get(url, headers=headers)
 

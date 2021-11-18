@@ -1,7 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const url = require('./urls');
-const fs = require('fs');
+const url = require('../urls');
+// const fs = require('fs');
 
 // For Debugging Purposes
 // fs.writeFile('data.html', $.html(), function (err) {
@@ -176,7 +176,6 @@ const topWeekManga = async() => {
             img: img,
             link: link
         })
-
     });
 
     return await Promise.all(promises);

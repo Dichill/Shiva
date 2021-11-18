@@ -7,12 +7,14 @@ router.get('/', (req, res) => {
         isSuccess: true,
         message: '🐉 Shiva API ~ Manganelo ~ Mangadex (W.I.P)',
         entries: [{
-            "Search": "/api/v1/Search/:query",
-            "LatestUpdates": "/api/v1/latest_updates",
-            "TopWeek": "/api/v1/top_week",
-            "ContentMangaHandler": "/api/v1/comic/:query",
-            "ReadMangaHandler": "/api/v1/comic/read/:query",
-            "Hot": "/api/v1/hot/:page"
+            manganelo: [{
+                "Hot": "/api/v1/manganelo/hot/:page",
+                "Search": "/api/v1/manganelo/Search/:query",
+                "TopWeek": "/api/v1/manganelo/top_week",
+                "LatestUpdates": "/api/v1/manganelo/latest_updates",
+                "ContentMangaHandler": "/api/v1/manganelo/comic/:query",
+                "ReadMangaHandler": "/api/v1/manganelo/comic/read/:query",
+            }]
         }]
     });
 });
