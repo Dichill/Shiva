@@ -9,7 +9,7 @@
 
 ## Shiva
 - [x] It is a manga backend scraper that gets sources from different sites.
-- [x] The very foundation of **Shiva** is made by [ChrisMichaelPerezSantiago](https://github.com/ChrisMichaelPerezSantiag), you can check his project [gogoanime](https://github.com/ChrisMichaelPerezSantiago/gogoanime). It might be two different concepts, but the idea and the way gogoanime was made, made it easier for it be recoded into a manga backend scraper.
+- [x] The very foundation of **Shiva** is made by [Chris Michael](https://github.com/ChrisMichaelPerezSantiag), you can check his project [gogoanime](https://github.com/ChrisMichaelPerezSantiago/gogoanime). It might be two different concepts, but the idea and the way gogoanime was made-made it easier for it be recoded into a manga backend scraper.
 
 ### Start Express
 Production
