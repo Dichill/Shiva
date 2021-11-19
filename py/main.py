@@ -1,9 +1,9 @@
 import requests
 import os
 
-search_api = 'https://shiva-comic.herokuapp.com/api/v1/manganelo/search/'
-content_api = 'https://shiva-comic.herokuapp.com/api/v1/manganelo/comic/'
-read_api = 'https://shiva-comic.herokuapp.com/api/v1/manganelo/comic/read/'
+search_api = "yourdomain.com/api/v1/manganelo/search/'
+content_api = 'yourdomain.com/api/v1/manganelo/comic/'
+read_api = 'yourdomain.com/api/v1/manganelo/comic/read/'
 
 headers = {}
 headers['Referer'] = 'https://readmanganato.com/'
