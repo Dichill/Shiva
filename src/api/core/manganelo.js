@@ -1,5 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { parse } = require('dotenv');
 const url = require('../urls');
 // const fs = require('fs');
 
@@ -59,16 +60,29 @@ const hotManga = async(page) => {
     const $ = cheerio.load(body);
     const promises = [];
 
-    $('div.body-site div.container.container-main div.panel-content-genres div.content-genres-item').each((index, element) => {        
+    $('div.body-site div.container.container-main').each((index, element) => {        
         const $element = $(element);
-        const title = $element.find('a').attr('title');
-        const link = $element.find('a').attr('href').split('/')[3];
-        const img = $element.find('img').attr('src');
+
+        $element.find('div.panel-content-genres div.content-genres-item').each((j, el) => {
+            const $el = $(el);
+            const title = $el.find('a').attr('title');
+            const link = $el.find('a').attr('href').split('/')[3];
+            const img = $el.find('img').attr('src');
+
+            promises.push({
+                title: title,
+                link: link,
+                img: img
+            })
+        });
+
+        var total = $element.find('div.panel-page-number div.group-qty a').text().split(" ")[2].replace(",", "")
+        console.log(total)
+        total = parseInt(total)
+        total = Math.round(total / 24)
 
         promises.push({
-            title: title,
-            link: link,
-            img: img
+            total: total
         })
     })
 
