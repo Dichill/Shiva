@@ -10,7 +10,7 @@ const url = require('../urls');
 // });
 
 const latestUpdates = async() => {
-    const res = await axios.get(`${url.BASE_URL}genre-all`)
+    const res = await axios.get(`${url.MANGANELO_URL}genre-all`)
     const body = await res.data
     const $ = cheerio.load(body);
     const promises = [];
@@ -32,7 +32,7 @@ const latestUpdates = async() => {
 }
 
 const search = async(query) => {
-    const res = await axios.get(`${url.BASE_URL}search/story/${query}`)
+    const res = await axios.get(`${url.MANGANELO_URL}search/story/${query}`)
     const body = await res.data
     const $ = cheerio.load(body);
     const promises = [];
@@ -54,7 +54,7 @@ const search = async(query) => {
 }
 
 const hotManga = async(page) => {
-    const res = await axios.get(`${url.BASE_URL}genre-all/${page}?type=topview`)
+    const res = await axios.get(`${url.MANGANELO_URL}genre-all/${page}?type=topview`)
     const body = await res.data
     const $ = cheerio.load(body);
     const promises = [];
@@ -160,7 +160,7 @@ const readMangaHandler = async(query) => {
 }
 
 const topWeekManga = async() => {
-    const res = await axios.get(`${url.BASE_URL}`)
+    const res = await axios.get(`${url.MANGANELO_URL}`)
     const body = await res.data
     const $ = cheerio.load(body);
     const promises = [];
