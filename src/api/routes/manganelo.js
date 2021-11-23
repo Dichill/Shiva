@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 const manganelo = require('../core/manganelo');
 
 // router.get('/search/:query', (req, res) => {
@@ -128,5 +129,31 @@ router.get('/Hot/:page', (req, res) => {
         }
     })
 });
+
+router.get('/Decrypt/:query', (req, res) => {
+    const query = req.params.query;
+
+    const url = "https://" + query.replace(/-/g, '/');
+
+    const referer_url = "https://readmanganato.com/";
+
+    const config = {
+        responseType: 'arraybuffer',
+        headers: {
+            "Referer": referer_url,
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+        }
+    };
+    res.header['referer'] = referer_url;
+    axios.get(url, config).then((response) => {
+        var img_binary = Buffer.from(response.data, 'binary').toString('base64')
+
+        res.status(200).json({
+            isSuccess: true,
+            img: img_binary
+        });
+    })
+    .catch((error) => console.log(error));
+})
 
 module.exports = router
