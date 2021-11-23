@@ -1,7 +1,5 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const http = require('http');
-const { parse } = require('dotenv');
 const url = require('../urls');
 // const fs = require('fs');
 
@@ -176,6 +174,7 @@ const readMangaHandler = async(query) => {
 
     const promises = [];
     const images = [];
+    const images_clean = [];
 
     $('div.body-site div.container-chapter-reader').each((index, element) => {
         const $element = $(element)
@@ -183,11 +182,15 @@ const readMangaHandler = async(query) => {
         $element.find('img').each((j, el) => {
             $el = $(el);
             image = $el.attr('src').split("https://")[1].replace(/\//g, '-');
+            image_clean = $el.attr('src')
+
             images.push(image)
+            images_clean.push(image_clean)
         })
 
         promises.push({
             images: images,
+            images_clean: images_clean
         })
     });
 
