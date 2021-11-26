@@ -49,11 +49,11 @@ def getMangaContent(res):
 
             os.system('cls')
 
-            for i in range(0, len(body['comic'][0]['images'])):
-                r = requests.get(body['comic'][0]['images'][i], headers=headers)
+            for i in range(0, len(body['comic'][0]['images_clean'])):
+                r = requests.get(body['comic'][0]['images_clean'][i], headers=headers)
 
                 os.system('cls')
-                print('[Shiva] Downloading {0}/{1} | From Chapter: {2}'.format(i + 1, len(body['comic'][0]['images']), chapter_id[x].split('~')[1].split('-')[1]))
+                print('[Shiva] Downloading {0}/{1} | From Chapter: {2}'.format(i + 1, len(body['comic'][0]['images_clean']), chapter_id[x].split('~')[1].split('-')[1]))
 
                 with open('{0}/{1}.jpg'.format(chapter_path, i + 1), 'wb') as fh:
                     fh.write(r.content)
@@ -77,13 +77,13 @@ def getMangaContent(res):
         body = res.json()
 
         os.system('cls')
-        print('[Shiva] Downloading 0/{0}'.format(len(body['comic'][0]['images'])))
+        print('[Shiva] Downloading 0/{0}'.format(len(body['comic'][0]['images_clean'])))
 
-        for x in range(0, len(body['comic'][0]['images'])):
-            r = requests.get(body['comic'][0]['images'][x], headers=headers)
+        for x in range(0, len(body['comic'][0]['images_clean'])):
+            r = requests.get(body['comic'][0]['images_clean'][x], headers=headers)
 
             os.system('cls')
-            print('[Shiva] Downloading {0}/{1}'.format(x + 1, len(body['comic'][0]['images'])))
+            print('[Shiva] Downloading {0}/{1}'.format(x + 1, len(body['comic'][0]['images_clean'])))
 
             with open('{0}/{1}.jpg'.format(chapter_path, x + 1), 'wb') as fh:
                 fh.write(r.content)
