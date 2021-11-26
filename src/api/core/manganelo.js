@@ -21,7 +21,8 @@ const latestUpdates = async() => {
         $element.find('div.panel-content-genres div.content-genres-item').each((j, el) => {
             const $el = $(el);
             const title = $el.find('a').attr('title');
-            const description = $el.find('div.genres-item-info div.genres-item-description').text().replace('“', "'").replace('”', "'")            
+            // const description = $el.find('div.genres-item-info div.genres-item-description').text().replace('“', "'").replace('”', "'")            
+            const description = $el.find('div.genres-item-info div.genres-item-description').text()
             const updatedChapter = $el.find('div.genres-item-info a.genres-item-chap.text-nowrap.a-h').text()
             const link = $el.find('a').attr('href').split('/')[3];
             const img = $el.find('img').attr('src');
@@ -36,6 +37,7 @@ const latestUpdates = async() => {
         });
 
         var total = $element.find('div.panel-page-number div.group-qty a').text().split(" ")[2].replace(",", "")
+        console.log(total)
         total = parseInt(total)
         total = Math.round(total / 24)
 
@@ -85,23 +87,19 @@ const hotManga = async(page) => {
             const updatedChapter = $el.find('div.genres-item-info a.genres-item-chap.text-nowrap.a-h').text()
             const link = $el.find('a').attr('href').split('/')[3];
             const img = $el.find('img').attr('src');
+            var total = $element.find('div.panel-page-number div.group-qty a').text().split(" ")[2].replace(",", "")
+            total = parseInt(total)
+            total = Math.round(total / 24)
 
             promises.push({
                 title: title,
                 description: description,
                 updated_chapter: updatedChapter,
                 link: link,
-                img: img
+                img: img,
+                total: total
             })
         });
-
-        var total = $element.find('div.panel-page-number div.group-qty a').text().split(" ")[2].replace(",", "")
-        total = parseInt(total)
-        total = Math.round(total / 24)
-
-        promises.push({
-            total: total
-        })
     })
 
     return await Promise.all(promises)
